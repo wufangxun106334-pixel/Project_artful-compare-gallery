@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CollectionSlugRouteImport } from './routes/collection.$slug'
+import { Route as PerspectiveIdRouteImport } from './routes/perspective.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CollectionSlugRoute = CollectionSlugRouteImport.update({
+  id: '/collection/$slug',
+  path: '/collection/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerspectiveIdRoute = PerspectiveIdRouteImport.update({
+  id: '/perspective/$id',
+  path: '/perspective/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/collection/$slug': typeof CollectionSlugRoute
+  '/perspective/$id': typeof PerspectiveIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/collection/$slug': typeof CollectionSlugRoute
+  '/perspective/$id': typeof PerspectiveIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/collection/$slug': typeof CollectionSlugRoute
+  '/perspective/$id': typeof PerspectiveIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/collection/$slug' | '/perspective/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/collection/$slug' | '/perspective/$id'
+  id: '__root__' | '/' | '/collection/$slug' | '/perspective/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CollectionSlugRoute: typeof CollectionSlugRoute
+  PerspectiveIdRoute: typeof PerspectiveIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/collection/$slug': {
+      id: '/collection/$slug'
+      path: '/collection/$slug'
+      fullPath: '/collection/$slug'
+      preLoaderRoute: typeof CollectionSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perspective/$id': {
+      id: '/perspective/$id'
+      path: '/perspective/$id'
+      fullPath: '/perspective/$id'
+      preLoaderRoute: typeof PerspectiveIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CollectionSlugRoute: CollectionSlugRoute,
+  PerspectiveIdRoute: PerspectiveIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
