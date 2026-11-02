@@ -62,7 +62,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Work+Sans:wght@400;500;600&display=swap" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=IM+Fell+English:ital@0;1&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" },
       { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
@@ -96,7 +96,7 @@ function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-8 gap-y-2 px-5 py-3 md:px-8">
-        <Link to="/" className="font-serif text-2xl tracking-tight">Medieval <em className="text-primary">Atlas</em></Link>
+        <Link to="/" className="font-display text-2xl text-primary">Medieval <span className="text-gold">Atlas</span></Link>
         <nav aria-label="Perspectives" className="order-3 flex w-full gap-5 overflow-x-auto text-sm md:order-none md:w-auto">
           {nav.map((n) => (
             <Link key={n.id} to={n.to} params={{ id: n.id }} className="whitespace-nowrap text-muted-foreground hover:text-foreground" activeProps={{ className: "text-primary" }}>{n.label}</Link>
@@ -117,7 +117,7 @@ function Footer() {
     <footer className="mt-24 bg-ink text-ink-foreground">
       <div className="mx-auto grid max-w-7xl gap-8 px-5 py-14 md:grid-cols-3 md:px-8">
         <div>
-          <p className="font-serif text-3xl">Medieval Atlas</p>
+          <p className="font-display text-3xl text-accent">Medieval Atlas</p>
           <p className="mt-3 text-sm opacity-70">Selected art from Europe and Byzantium, approximately 1000–1500. {published.length} works published.</p>
         </div>
         <p className="text-sm opacity-70">An editorial selection — not a survey of every medieval tradition. Period labels and date boundaries are conventions, not universal facts.</p>
