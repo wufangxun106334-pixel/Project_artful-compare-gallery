@@ -8,3 +8,5 @@
 - [ ] Filter sidebar: clicking must not jump to top; add Clear button
 - [ ] Back button on all pages
 - [ ] Verify display, images, admin login, permissions
+- [ ] Rounded corners on all artwork images; frosted-glass effect on floating elements
+- [ ] CollectionCard: object-contain, no hover zoom, srcset/sizes from real variants (thumbnail+display); verify Italy/France/England desktop+mobile; report dimensions
