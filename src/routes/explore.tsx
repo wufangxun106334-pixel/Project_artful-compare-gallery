@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { ArtworkGrid, Chip, PageHeader } from "@/components/atlas";
-import { DIMENSIONS, dimensionMeta, query, describeQuery, termLabel, published, undatedCount, type Criteria, type Dimension } from "@/lib/catalogue";
+import { DIMENSIONS, dimensionMeta, query, describeQuery, termLabel, published, undatedCount, facetCount, type Criteria, type Dimension } from "@/lib/catalogue";
 import { fromSearch, toSearch, validateCriteriaSearch } from "@/lib/url-criteria";
 
 export const Route = createFileRoute("/explore")({
@@ -55,10 +55,13 @@ function Explore() {
               <div className="flex flex-wrap gap-1.5">
                 {dimensionMeta[d].terms.filter((t) => published.some((a) => matchesOne(a, d, t.id))).map((t) => {
                   const on = c[d].includes(t.id);
+                  const n = facetCount(c, d, t.id);
+                  const off = !on && n === 0;
                   return (
-                    <button key={t.id} type="button" aria-pressed={on} onClick={() => toggle(d, t.id)}
-                      className={on ? "rounded-full border border-primary bg-primary px-2.5 py-1 text-xs text-primary-foreground" : "rounded-full border border-border px-2.5 py-1 text-xs hover:border-primary"}>
-                      {t.label}
+                    <button key={t.id} type="button" aria-pressed={on} disabled={off} onClick={() => toggle(d, t.id)}
+                      title={off ? "No works with the current filters" : `${n} works`}
+                      className={on ? "rounded-full border border-primary bg-primary px-2.5 py-1 text-xs text-primary-foreground" : off ? "cursor-not-allowed rounded-full border border-border bg-muted px-2.5 py-1 text-xs text-muted-foreground opacity-50 line-through decoration-muted-foreground/40" : "rounded-full border border-border px-2.5 py-1 text-xs hover:border-primary"}>
+                      {t.label} <span className="opacity-70">{n}</span>
                     </button>
                   );
                 })}

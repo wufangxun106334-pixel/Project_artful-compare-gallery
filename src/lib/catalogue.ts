@@ -137,3 +137,9 @@ export function describeQuery(c: Partial<Criteria>) {
 export const undatedCount = () => published.filter((a) => a.yearStart == null || a.yearEnd == null).length;
 
 export { collections, perspectives, makers };
+
+/** Faceted count: works that would match term `id` of dimension `d` together with every other active criterion. */
+export function facetCount(c: Partial<Criteria>, d: Dimension, id: string, pool: Artwork[] = published) {
+  const sel = d === "themes" && c.matchAllThemes ? [...new Set([...(c.themes ?? []), id])] : [id];
+  return query({ ...c, [d]: sel }, pool).length;
+}
