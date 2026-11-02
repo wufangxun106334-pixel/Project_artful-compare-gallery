@@ -73,3 +73,17 @@ describe("intersection query", () => {
     expect(collectionMembers(getCollection("italy")!).length).toBe(published.filter((a) => a.regionIds.includes("italy")).length);
   });
 });
+
+import { facetCount as _facetCount } from "@/lib/catalogue";
+describe("facet counts", () => {
+  it("counts zero for a term that cannot intersect the other active criteria", async () => {
+    const fx = (await import("./fixtures/artworks.json")).default as any[];
+    const a = fx[0];
+    const otherCentury = fx.find((b) => !b.centuryIds.some((x: string) => a.centuryIds.includes(x)))?.centuryIds[0];
+    const onlyA = fx.filter((b) => b.makerIds.includes(a.makerIds[0]) && !b.centuryIds.includes(otherCentury));
+    const crit = { centuries: [], regions: [], makers: [a.makerIds[0]], palettes: [], themes: [], mediums: [] };
+    expect(_facetCount(crit, "centuries", a.centuryIds[0], fx)).toBeGreaterThan(0);
+    if (onlyA.length === fx.filter((b) => b.makerIds.includes(a.makerIds[0])).length && otherCentury)
+      expect(_facetCount(crit, "centuries", otherCentury, fx)).toBe(0);
+  });
+});
