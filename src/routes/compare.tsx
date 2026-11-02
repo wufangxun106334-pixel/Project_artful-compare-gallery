@@ -8,9 +8,9 @@ import { ZoomDialog } from "@/components/zoom-dialog";
 import type { Artwork } from "@/data/artworks";
 
 export const Route = createFileRoute("/compare")({
-  validateSearch: (s: Record<string, unknown>): { a?: string; b?: string } => ({
-    a: typeof s.a === "string" ? s.a : undefined,
-    b: typeof s.b === "string" ? s.b : undefined,
+  validateSearch: (s: Record<string, unknown>): { a?: string | undefined; b?: string | undefined } => ({
+    a: typeof s["a"] === "string" ? s["a"] : undefined,
+    b: typeof s["b"] === "string" ? s["b"] : undefined,
   }),
   head: () => ({
     meta: [

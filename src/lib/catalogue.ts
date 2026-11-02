@@ -7,9 +7,9 @@ export type Dimension = "centuries" | "regions" | "makers" | "palettes" | "theme
 export const DIMENSIONS: Dimension[] = ["centuries", "regions", "makers", "palettes", "themes", "mediums"];
 
 export type Criteria = Record<Dimension, string[]> & {
-  yearFrom?: number;
-  yearTo?: number;
-  matchAllThemes?: boolean;
+  yearFrom?: number | undefined;
+  yearTo?: number | undefined;
+  matchAllThemes?: boolean | undefined;
 };
 
 export const emptyCriteria = (): Criteria => ({ centuries: [], regions: [], makers: [], palettes: [], themes: [], mediums: [] });

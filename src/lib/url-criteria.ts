@@ -1,7 +1,7 @@
 import { DIMENSIONS, emptyCriteria, type Criteria } from "./catalogue";
 
-export type CriteriaSearch = Partial<Record<(typeof DIMENSIONS)[number], string>> & {
-  from?: number; to?: number; all?: number; sort?: string;
+export type CriteriaSearch = Partial<Record<(typeof DIMENSIONS)[number], string | undefined>> & {
+  from?: number | undefined; to?: number | undefined; all?: number | undefined; sort?: string | undefined;
 };
 
 const toNum = (v: unknown) => { const n = Number(v); return v !== undefined && v !== "" && Number.isFinite(n) ? Math.round(n) : undefined; };
@@ -9,11 +9,11 @@ const toNum = (v: unknown) => { const n = Number(v); return v !== undefined && v
 export function validateCriteriaSearch(s: Record<string, unknown>): CriteriaSearch {
   const out: CriteriaSearch = {};
   for (const d of DIMENSIONS) if (typeof s[d] === "string" && s[d]) out[d] = s[d] as string;
-  const from = toNum(s.from), to = toNum(s.to);
+  const from = toNum(s["from"]), to = toNum(s["to"]);
   if (from !== undefined) out.from = from;
   if (to !== undefined) out.to = to;
-  if (s.all === 1 || s.all === "1") out.all = 1;
-  if (typeof s.sort === "string") out.sort = s.sort;
+  if (s["all"] === 1 || s["all"] === "1") out.all = 1;
+  if (typeof s["sort"] === "string") out.sort = s["sort"];
   return out;
 }
 
@@ -26,7 +26,7 @@ export function fromSearch(s: CriteriaSearch): Criteria {
   return c;
 }
 
-export function toSearch(c: Partial<Criteria>, extra: { sort?: string } = {}): CriteriaSearch {
+export function toSearch(c: Partial<Criteria>, extra: { sort?: string | undefined } = {}): CriteriaSearch {
   const s: CriteriaSearch = {};
   for (const d of DIMENSIONS) if (c[d]?.length) s[d] = c[d]!.join(",");
   if (c.yearFrom != null) s.from = c.yearFrom;
