@@ -16,6 +16,7 @@ import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as SavedRouteImport } from './routes/saved'
 import { Route as ArtworkSlugRouteImport } from './routes/artwork.$slug'
 import { Route as CollectionSlugRouteImport } from './routes/collection.$slug'
+import { Route as MediaSplatRouteImport } from './routes/media.$'
 import { Route as PerspectiveIdRouteImport } from './routes/perspective.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -53,6 +54,11 @@ const CollectionSlugRoute = CollectionSlugRouteImport.update({
   path: '/collection/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MediaSplatRoute = MediaSplatRouteImport.update({
+  id: '/media/$',
+  path: '/media/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PerspectiveIdRoute = PerspectiveIdRouteImport.update({
   id: '/perspective/$id',
   path: '/perspective/$id',
@@ -67,6 +73,7 @@ export interface FileRoutesByFullPath {
   '/saved': typeof SavedRoute
   '/artwork/$slug': typeof ArtworkSlugRoute
   '/collection/$slug': typeof CollectionSlugRoute
+  '/media/$': typeof MediaSplatRoute
   '/perspective/$id': typeof PerspectiveIdRoute
 }
 export interface FileRoutesByTo {
@@ -77,6 +84,7 @@ export interface FileRoutesByTo {
   '/saved': typeof SavedRoute
   '/artwork/$slug': typeof ArtworkSlugRoute
   '/collection/$slug': typeof CollectionSlugRoute
+  '/media/$': typeof MediaSplatRoute
   '/perspective/$id': typeof PerspectiveIdRoute
 }
 export interface FileRoutesById {
@@ -88,6 +96,7 @@ export interface FileRoutesById {
   '/saved': typeof SavedRoute
   '/artwork/$slug': typeof ArtworkSlugRoute
   '/collection/$slug': typeof CollectionSlugRoute
+  '/media/$': typeof MediaSplatRoute
   '/perspective/$id': typeof PerspectiveIdRoute
 }
 export interface FileRouteTypes {
@@ -100,6 +109,7 @@ export interface FileRouteTypes {
     | '/saved'
     | '/artwork/$slug'
     | '/collection/$slug'
+    | '/media/$'
     | '/perspective/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -110,6 +120,7 @@ export interface FileRouteTypes {
     | '/saved'
     | '/artwork/$slug'
     | '/collection/$slug'
+    | '/media/$'
     | '/perspective/$id'
   id:
     | '__root__'
@@ -120,6 +131,7 @@ export interface FileRouteTypes {
     | '/saved'
     | '/artwork/$slug'
     | '/collection/$slug'
+    | '/media/$'
     | '/perspective/$id'
   fileRoutesById: FileRoutesById
 }
@@ -131,6 +143,7 @@ export interface RootRouteChildren {
   SavedRoute: typeof SavedRoute
   ArtworkSlugRoute: typeof ArtworkSlugRoute
   CollectionSlugRoute: typeof CollectionSlugRoute
+  MediaSplatRoute: typeof MediaSplatRoute
   PerspectiveIdRoute: typeof PerspectiveIdRoute
 }
 
@@ -185,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CollectionSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/media/$': {
+      id: '/media/$'
+      path: '/media/$'
+      fullPath: '/media/$'
+      preLoaderRoute: typeof MediaSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/perspective/$id': {
       id: '/perspective/$id'
       path: '/perspective/$id'
@@ -203,6 +223,7 @@ const rootRouteChildren: RootRouteChildren = {
   SavedRoute: SavedRoute,
   ArtworkSlugRoute: ArtworkSlugRoute,
   CollectionSlugRoute: CollectionSlugRoute,
+  MediaSplatRoute: MediaSplatRoute,
   PerspectiveIdRoute: PerspectiveIdRoute,
 }
 export const routeTree = rootRouteImport
