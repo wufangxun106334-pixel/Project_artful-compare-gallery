@@ -115,7 +115,7 @@ function Header() {
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-5 text-sm">
-          <Link to="/works" className="hover:text-primary" activeProps={{ className: "text-primary" }}>All works</Link>
+          <Link to="/works" search={{ category: "", page: 1 }} className="hover:text-primary" activeProps={{ className: "text-primary" }}>All works</Link>
           <Link to="/explore" className="hover:text-primary" activeProps={{ className: "text-primary" }}>Intersections</Link>
           <Link to="/compare" className="hover:text-primary">Compare{compare.list.length ? ` (${compare.list.length})` : ""}</Link>
           <Link to="/saved" className="hover:text-primary">Saved{saved.list.length ? ` (${saved.list.length})` : ""}</Link>

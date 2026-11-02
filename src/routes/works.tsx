@@ -11,8 +11,8 @@ const pageQuery = (category: string, page: number) =>
 
 export const Route = createFileRoute("/works")({
   validateSearch: (s: Record<string, unknown>) => ({
-    category: typeof s.category === "string" ? s.category : "",
-    page: Math.max(1, Number(s.page) || 1),
+    category: typeof s["category"] === "string" ? s["category"] : "",
+    page: Math.max(1, Number(s["page"]) || 1),
   }),
   loaderDeps: ({ search }) => ({ category: search.category, page: search.page }),
   loader: ({ context, deps }) => context.queryClient.ensureQueryData(pageQuery(deps.category, deps.page)),
@@ -25,7 +25,7 @@ export const Route = createFileRoute("/works")({
     ],
   }),
   component: Works,
-  errorComponent: ({ error }) => <p role="alert" className="py-20">{error.message}</p>,
+  errorComponent: ({ error }) => <p role="alert" className="py-20">{(error as Error).message}</p>,
   notFoundComponent: () => <p className="py-20">No works found.</p>,
 });
 

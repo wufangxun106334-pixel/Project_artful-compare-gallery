@@ -1,4 +1,5 @@
 import type { Artwork } from "@/data/artworks";
+import type { Json } from "@/integrations/supabase/types";
 
 export type ArtworkRow = {
   id: string;
@@ -22,7 +23,7 @@ export function rowToArtwork(r: ArtworkRow): Artwork {
   const d = (r.details ?? {}) as Partial<Artwork>;
   const img = (d.image ?? {}) as Partial<Artwork["image"]>;
   return {
-    centuryIds: [], styleIds: [], regionIds: [], makerIds: [], mediumIds: [], paletteIds: [], representativeColours: [], themeIds: [],
+    centuryIds: [], regionIds: [], makerIds: [], mediumIds: [], paletteIds: [], representativeColours: [], themeIds: [],
     institution: "", visualAnalysis: "", sources: [], dateLabel: "",
     ...d,
     id: r.id,
@@ -43,6 +44,6 @@ export function artworkToRow(a: Artwork, sortOrder: number, status: "published" 
     id: a.id, slug: a.slug, title: a.title, description: a.introduction, category: a.styleIds[0] ?? "early-netherlandish",
     image_url: a.image.display, thumbnail_url: a.image.thumbnail, image_path: a.id, sort_order: sortOrder, status,
     maker_display: a.makerDisplay, year_start: a.yearStart, year_end: a.yearEnd,
-    details: a as unknown as Record<string, unknown>,
+    details: a as unknown as Json,
   };
 }

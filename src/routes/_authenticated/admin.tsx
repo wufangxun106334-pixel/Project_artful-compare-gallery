@@ -82,7 +82,7 @@ function Admin() {
   async function remove(r: Row) {
     if (!confirm(`Delete “${r.title}”? This removes the record and its images.`)) return;
     const { error } = await supabase.from("artworks").delete().eq("id", r.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     await supabase.storage.from("artworks").remove([`${r.id}/display.webp`, `${r.id}/thumbnail.webp`]);
     toast.success("Deleted");
     refreshAll();
@@ -149,8 +149,8 @@ function Editor({ row, allRows, onClose, onSaved }: { row: Row | null; allRows: 
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
-    if (!a.title.trim()) return toast.error("Title is required");
-    if (!file && !a.image.display) return toast.error("Upload an image");
+    if (!a.title.trim()) { toast.error("Title is required"); return; }
+    if (!file && !a.image.display) { toast.error("Upload an image"); return; }
     setBusy(true);
     try {
       const rec: Artwork = { ...a, slug: a.slug || slugify(`${a.makerDisplay.split(" ").pop() ?? ""} ${a.title}`) };
@@ -216,7 +216,7 @@ function Editor({ row, allRows, onClose, onSaved }: { row: Row | null; allRows: 
       <div className="text-sm md:col-span-2"><p className="mb-1">Themes</p>{pills("themeIds", themes)}</div>
       <label className="text-sm">Image credit<input className={input} value={a.image.credit} onChange={(e) => setImg({ credit: e.target.value })} /></label>
       <label className="text-sm">Rights<input className={input} value={a.image.rightsLabel} onChange={(e) => setImg({ rightsLabel: e.target.value })} /></label>
-      <label className="text-sm">Source file page (URL)<input className={input} value={a.image.sourceFilePage ?? ""} onChange={(e) => setImg({ sourceFilePage: e.target.value || undefined })} /></label>
+      <label className="text-sm">Source file page (URL)<input className={input} value={a.image.sourceFilePage ?? ""} onChange={(e) => setImg({ sourceFilePage: e.target.value })} /></label>
       <label className="text-sm">Alt text<input className={input} value={a.image.alt} onChange={(e) => setImg({ alt: e.target.value })} /></label>
       <div className="text-sm md:col-span-2">
         <p className="mb-1">Image {a.image.width ? `(current ${a.image.width}×${a.image.height})` : ""}</p>
