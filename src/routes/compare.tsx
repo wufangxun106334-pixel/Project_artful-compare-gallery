@@ -4,7 +4,7 @@ import { Maximize2 } from "lucide-react";
 import { ArtImage, PageHeader, Swatches } from "@/components/atlas";
 import { getArtwork, sharedAttributes, termLabel, published, type Dimension } from "@/lib/catalogue";
 import { useCompare } from "@/lib/storage";
-import { ZoomDialog } from "./artwork.$slug";
+import { ZoomDialog } from "@/components/zoom-dialog";
 import type { Artwork } from "@/data/artworks";
 
 export const Route = createFileRoute("/compare")({

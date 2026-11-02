@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArtworkGrid, PageHeader } from "@/components/atlas";
-import { getCollection, collectionMembers, collectionSortNote, collectionCriteria, visibleCollections, getPerspective, getArtwork } from "@/lib/catalogue";
+import { getCollection, collectionMembers, collectionSortNote, collectionCriteria, visibleCollections, getPerspective } from "@/lib/catalogue";
 import { toSearch } from "@/lib/url-criteria";
 
 export const Route = createFileRoute("/collection/$slug")({
@@ -11,14 +11,12 @@ export const Route = createFileRoute("/collection/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) return { meta: [{ title: "Collection not found — Medieval Atlas" }, { name: "robots", content: "noindex" }] };
-    const cover = getArtwork(loaderData.coverArtworkId);
     return {
       meta: [
         { title: `${loaderData.title} — Medieval Atlas` },
         { name: "description", content: loaderData.introduction },
         { property: "og:title", content: `${loaderData.title} — Medieval Atlas` },
         { property: "og:description", content: loaderData.introduction },
-        ...(cover ? [] : []),
       ],
     };
   },

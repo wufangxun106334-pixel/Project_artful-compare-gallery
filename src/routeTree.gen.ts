@@ -10,12 +10,42 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as CompareRouteImport } from './routes/compare'
+import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as SavedRouteImport } from './routes/saved'
+import { Route as ArtworkSlugRouteImport } from './routes/artwork.$slug'
 import { Route as CollectionSlugRouteImport } from './routes/collection.$slug'
 import { Route as PerspectiveIdRouteImport } from './routes/perspective.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExploreRoute = ExploreRouteImport.update({
+  id: '/explore',
+  path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SavedRoute = SavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArtworkSlugRoute = ArtworkSlugRouteImport.update({
+  id: '/artwork/$slug',
+  path: '/artwork/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CollectionSlugRoute = CollectionSlugRouteImport.update({
@@ -31,30 +61,75 @@ const PerspectiveIdRoute = PerspectiveIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/compare': typeof CompareRoute
+  '/explore': typeof ExploreRoute
+  '/saved': typeof SavedRoute
+  '/artwork/$slug': typeof ArtworkSlugRoute
   '/collection/$slug': typeof CollectionSlugRoute
   '/perspective/$id': typeof PerspectiveIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/compare': typeof CompareRoute
+  '/explore': typeof ExploreRoute
+  '/saved': typeof SavedRoute
+  '/artwork/$slug': typeof ArtworkSlugRoute
   '/collection/$slug': typeof CollectionSlugRoute
   '/perspective/$id': typeof PerspectiveIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/compare': typeof CompareRoute
+  '/explore': typeof ExploreRoute
+  '/saved': typeof SavedRoute
+  '/artwork/$slug': typeof ArtworkSlugRoute
   '/collection/$slug': typeof CollectionSlugRoute
   '/perspective/$id': typeof PerspectiveIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/collection/$slug' | '/perspective/$id'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/compare'
+    | '/explore'
+    | '/saved'
+    | '/artwork/$slug'
+    | '/collection/$slug'
+    | '/perspective/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/collection/$slug' | '/perspective/$id'
-  id: '__root__' | '/' | '/collection/$slug' | '/perspective/$id'
+  to:
+    | '/'
+    | '/about'
+    | '/compare'
+    | '/explore'
+    | '/saved'
+    | '/artwork/$slug'
+    | '/collection/$slug'
+    | '/perspective/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/compare'
+    | '/explore'
+    | '/saved'
+    | '/artwork/$slug'
+    | '/collection/$slug'
+    | '/perspective/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  CompareRoute: typeof CompareRoute
+  ExploreRoute: typeof ExploreRoute
+  SavedRoute: typeof SavedRoute
+  ArtworkSlugRoute: typeof ArtworkSlugRoute
   CollectionSlugRoute: typeof CollectionSlugRoute
   PerspectiveIdRoute: typeof PerspectiveIdRoute
 }
@@ -66,6 +141,41 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/explore': {
+      id: '/explore'
+      path: '/explore'
+      fullPath: '/explore'
+      preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/saved': {
+      id: '/saved'
+      path: '/saved'
+      fullPath: '/saved'
+      preLoaderRoute: typeof SavedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/artwork/$slug': {
+      id: '/artwork/$slug'
+      path: '/artwork/$slug'
+      fullPath: '/artwork/$slug'
+      preLoaderRoute: typeof ArtworkSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/collection/$slug': {
@@ -87,6 +197,11 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  CompareRoute: CompareRoute,
+  ExploreRoute: ExploreRoute,
+  SavedRoute: SavedRoute,
+  ArtworkSlugRoute: ArtworkSlugRoute,
   CollectionSlugRoute: CollectionSlugRoute,
   PerspectiveIdRoute: PerspectiveIdRoute,
 }
