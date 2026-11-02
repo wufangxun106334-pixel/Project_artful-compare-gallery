@@ -153,3 +153,19 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
+
+/* Frosted glass for floating elements (sidebars, overlays, hovered cards). */
+@utility glass {
+  background: color-mix(in oklch, var(--color-card) 62%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid color-mix(in oklch, var(--color-border) 70%, transparent);
+  box-shadow: 0 10px 30px -18px oklch(0.21 0.04 260 / 0.35);
+}
+@utility glass-hover {
+  transition: background-color 300ms, box-shadow 300ms, backdrop-filter 300ms;
+  &:hover {
+    background: color-mix(in oklch, var(--color-card) 55%, transparent);
+    backdrop-filter: blur(14px) saturate(140%);
+    box-shadow: 0 16px 40px -20px oklch(0.21 0.04 260 / 0.45);
+  }
+}

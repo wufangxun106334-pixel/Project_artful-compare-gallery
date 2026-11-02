@@ -7,7 +7,7 @@ import { collectionMembers, getArtwork } from "@/lib/catalogue";
 import { useBookmarks, useCompare } from "@/lib/storage";
 import { cn } from "@/lib/utils";
 
-export function ArtImage({ src, alt, width, height, className, eager }: { src: string; alt: string; width?: number | undefined; height?: number | undefined; className?: string | undefined; eager?: boolean | undefined }) {
+export function ArtImage({ src, srcSet, sizes, alt, width, height, className, eager }: { src: string; srcSet?: string | undefined; sizes?: string | undefined; alt: string; width?: number | undefined; height?: number | undefined; className?: string | undefined; eager?: boolean | undefined }) {
   const [state, setState] = useState<"loading" | "ok" | "error">("loading");
   const ref = useRef<HTMLImageElement>(null);
   // Images may finish loading before hydration attaches onLoad/onError.
@@ -18,20 +18,31 @@ export function ArtImage({ src, alt, width, height, className, eager }: { src: s
   const ratio = width && height ? `${width} / ${height}` : undefined;
   if (state === "error")
     return (
-      <div style={{ aspectRatio: ratio ?? "4 / 3" }} className={cn("flex w-full flex-col items-center justify-center gap-2 bg-muted text-muted-foreground", className)} role="img" aria-label={`Image unavailable: ${alt}`}>
+      <div style={{ aspectRatio: ratio ?? "4 / 3" }} className={cn("flex w-full flex-col items-center justify-center gap-2 rounded-lg bg-muted text-muted-foreground", className)} role="img" aria-label={`Image unavailable: ${alt}`}>
         <ImageOff className="h-6 w-6" aria-hidden />
         <span className="text-xs">Image unavailable</span>
       </div>
     );
   return (
     <img
-      ref={ref} src={src} alt={alt} width={width} height={height}
+      ref={ref} src={src} srcSet={srcSet} sizes={sizes} alt={alt} width={width} height={height}
       loading={eager ? "eager" : "lazy"} decoding="async"
       style={{ aspectRatio: ratio }}
       onLoad={() => setState("ok")} onError={() => setState("error")}
-      className={cn("block h-auto w-full bg-muted transition-opacity duration-500", state === "loading" ? "opacity-0" : "opacity-100", className)}
+      className={cn("block h-auto w-full rounded-lg bg-muted transition-opacity duration-500", state === "loading" ? "opacity-0" : "opacity-100", className)}
     />
   );
+}
+
+/**
+ * Real stored variants only: thumbnail (long edge 1100px) and display (long edge 1920px).
+ * Widths are computed from each record's display size so the browser picks correctly on 2x screens.
+ */
+export function variantSrcSet(a: Artwork) {
+  const w = a.image.width, h = a.image.height;
+  if (!w || !h) return undefined;
+  const thumbW = Math.round(w * Math.min(1, 1100 / Math.max(w, h)));
+  return thumbW < w ? `${a.image.thumbnail} ${thumbW}w, ${a.image.display} ${w}w` : `${a.image.display} ${w}w`;
 }
 
 export function Swatches({ colours, size = "md", label = true }: { colours: string[]; size?: "sm" | "md"; label?: boolean }) {
@@ -79,9 +90,9 @@ export function CompareButton({ id, withLabel }: { id: string; withLabel?: boole
 
 export function ArtworkCard({ a, note }: { a: Artwork; note?: ReactNode }) {
   return (
-    <article className="group mb-8 break-inside-avoid">
-      <Link to="/artwork/$slug" params={{ slug: a.slug }} className="block overflow-hidden bg-muted shadow-frame">
-        <ArtImage src={a.image.thumbnail} alt={a.image.alt} width={a.image.width} height={a.image.height} className="transition-transform duration-700 group-hover:scale-[1.02]" />
+    <article className="group glass-hover mb-8 break-inside-avoid rounded-xl p-2 -m-2">
+      <Link to="/artwork/$slug" params={{ slug: a.slug }} className="block overflow-hidden rounded-lg bg-muted shadow-frame">
+        <ArtImage src={a.image.thumbnail} srcSet={variantSrcSet(a)} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw" alt={a.image.alt} width={a.image.width} height={a.image.height} />
       </Link>
       <div className="mt-3 flex items-start justify-between gap-3">
         <div className="min-w-0">
@@ -122,11 +133,16 @@ export function CollectionCard({ c, variant = "default" }: { c: Collection; vari
   const members = collectionMembers(c);
   const cover = getArtwork(c.coverArtworkId) ?? members[0];
   return (
-    <Link to="/collection/$slug" params={{ slug: c.slug }} className="group block">
-      <div className="relative aspect-[4/5] overflow-hidden bg-muted">
-        {cover && <ArtImage src={cover.image.thumbnail} alt="" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />}
+    <Link to="/collection/$slug" params={{ slug: c.slug }} className="group glass-hover block rounded-xl p-2 -m-2">
+      <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-lg bg-background p-3">
+        {cover && (
+          // Whole artwork, natural proportions: contain inside the frame, never crop or zoom.
+          <img src={cover.image.display} srcSet={variantSrcSet(cover)} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw"
+            alt="" loading="lazy" decoding="async" width={cover.image.width} height={cover.image.height}
+            className={cn("max-h-full max-w-full rounded-md object-contain", variant === "palette" && "mb-14")} />
+        )}
         {variant === "palette" && (
-          <div className="absolute inset-x-0 bottom-0 flex h-14">
+          <div className="absolute inset-x-0 bottom-0 flex h-14 overflow-hidden rounded-b-lg">
             {Array.from(new Set(members.flatMap((m) => m.representativeColours.slice(0, 2)))).slice(0, 8).map((col) => (
               <span key={col} className="flex-1" style={{ backgroundColor: col }} />
             ))}

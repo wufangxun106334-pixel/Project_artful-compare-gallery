@@ -106,7 +106,7 @@ function Header() {
   const compare = useCompare();
   const saved = useBookmarks();
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
+    <header className="glass sticky top-0 z-40 border-x-0 border-t-0">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-8 gap-y-2 px-5 py-3 md:px-8">
         <Link to="/" className="font-display text-2xl text-primary">Medieval <span className="text-gold">Atlas</span></Link>
         <nav aria-label="Perspectives" className="order-3 flex w-full gap-5 overflow-x-auto text-sm md:order-none md:w-auto">
