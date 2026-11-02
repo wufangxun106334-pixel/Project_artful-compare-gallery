@@ -45,7 +45,7 @@ export function Swatches({ colours, size = "md", label = true }: { colours: stri
         ))}
       </ul>
       {label && size === "md" && (
-        <div className="flex justify-between font-mono text-[10px] uppercase text-muted-foreground">
+        <div className="flex justify-between text-xs text-muted-foreground">
           {colours.map((c) => <span key={c}>{c}</span>)}
         </div>
       )}
@@ -159,7 +159,7 @@ export function PageHeader({ eyebrow, title, children }: { eyebrow?: string; tit
   return (
     <header className="fade-up border-b border-border pb-10 pt-14">
       {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-      <h1 className="mt-3 max-w-4xl text-5xl leading-[1.02] md:text-7xl">{title}</h1>
+      <h1 className="mt-3 max-w-4xl text-4xl leading-tight md:text-6xl">{title}</h1>
       {children && <div className="mt-5 max-w-2xl text-lg text-muted-foreground">{children}</div>}
     </header>
   );

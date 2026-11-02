@@ -24,7 +24,7 @@ function Home() {
       <section className="grid items-center gap-10 py-12 md:grid-cols-[1.1fr_1fr] md:py-20">
         <div className="fade-up">
           <p className="eyebrow">Europe & Byzantium · c. 1000–1500</p>
-          <h1 className="mt-4 text-6xl leading-[0.95] md:text-8xl">One collection,<br /><em className="text-primary">five ways</em> of looking.</h1>
+          <h1 className="mt-4 text-5xl leading-[1.05] md:text-7xl">One collection,<br /><span className="text-gold">five ways</span> of looking.</h1>
           <p className="mt-6 max-w-lg text-lg text-muted-foreground">
             Medieval Atlas introduces medieval art through curated collections — by century, by place, by maker, by colour and by subject. Every work appears once, and connects to many others.
           </p>
