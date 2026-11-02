@@ -1,0 +1,4 @@
+create policy "Anyone reads artwork images" on storage.objects for select to anon, authenticated using (bucket_id = 'artworks');
+create policy "Admins upload artwork images" on storage.objects for insert to authenticated with check (bucket_id = 'artworks' and public.has_role(auth.uid(), 'admin'));
+create policy "Admins update artwork images" on storage.objects for update to authenticated using (bucket_id = 'artworks' and public.has_role(auth.uid(), 'admin'));
+create policy "Admins delete artwork images" on storage.objects for delete to authenticated using (bucket_id = 'artworks' and public.has_role(auth.uid(), 'admin'));
