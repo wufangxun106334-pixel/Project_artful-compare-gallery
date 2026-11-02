@@ -33,6 +33,14 @@ describe("catalogue integrity", () => {
   });
 });
 
+describe("catalogue size and focus", () => {
+  it("publishes at least 100 works", () => expect(published.length).toBeGreaterThanOrEqual(100));
+  it("centres on Bosch and Bruegel", () => {
+    expect(query({ makers: ["hieronymus-bosch"] }).length).toBeGreaterThanOrEqual(25);
+    expect(query({ makers: ["pieter-bruegel"] }).length).toBeGreaterThanOrEqual(25);
+  });
+});
+
 describe("intersection query", () => {
   it("ORs within a dimension: France OR England", () => {
     const ids = query({ regions: ["france", "england"] }).map((a) => a.id).sort();
@@ -46,7 +54,9 @@ describe("intersection query", () => {
     expect(query({ themes: ["virgin-and-child", "adoration"], matchAllThemes: true }).map((a) => a.id)).toEqual(["art-014"]);
   });
   it("year range uses overlap: 1440–1450 includes Descent from the Cross (1435–1443)", () => {
-    expect(query({ yearFrom: 1440, yearTo: 1450 }).map((a) => a.id)).toEqual(["art-010"]);
+    const hits = query({ yearFrom: 1440, yearTo: 1450 });
+    expect(hits.map((a) => a.id)).toContain("art-010");
+    hits.forEach((a) => expect(a.yearStart! <= 1450 && a.yearEnd! >= 1440).toBe(true));
   });
   it("returns an honest empty result rather than substitutes", () => {
     expect(query({ regions: ["byzantium"], mediums: ["textile"] })).toEqual([]);
