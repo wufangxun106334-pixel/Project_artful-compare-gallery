@@ -7,7 +7,7 @@ export const centuries: (Term & { start: number; end: number; context: string })
   { id: "c13", label: "13th century", start: 1201, end: 1300, context: "Great cathedral workshops, the Latin occupation and recovery of Constantinople, and new panel painting in Tuscany." },
   { id: "c14", label: "14th century", start: 1301, end: 1400, context: "Sienese and Florentine painting flourishes; famine and plague reshape European society after 1348." },
   { id: "c15", label: "15th century", start: 1401, end: 1500, context: "Courtly luxury manuscripts, oil painting in the Low Countries, and Florentine altarpieces of extraordinary richness." },
-  { id: "c16", label: "Around 1500", start: 1501, end: 1600, context: "Works made close to 1500, at the edge of this catalogue's editorial scope." },
+  { id: "c16", label: "16th century", start: 1501, end: 1600, context: "Bosch's late visions and Pieter Bruegel's landscapes and peasant scenes carry Netherlandish painting beyond the Middle Ages." },
 ];
 
 export const regions: Term[] = [
@@ -26,10 +26,12 @@ export const styles: Term[] = [
   { id: "italo-byzantine", label: "Italo-Byzantine" },
   { id: "international-gothic", label: "International Gothic" },
   { id: "early-netherlandish", label: "Early Netherlandish" },
+  { id: "northern-renaissance", label: "Northern Renaissance" },
 ];
 
 export const mediums: Term[] = [
   { id: "panel-painting", label: "Panel painting" },
+  { id: "canvas-painting", label: "Painting on canvas" },
   { id: "fresco", label: "Fresco" },
   { id: "manuscript", label: "Illuminated manuscript" },
   { id: "mosaic", label: "Mosaic" },
@@ -59,6 +61,10 @@ export const themes: Term[] = [
   { id: "history-and-war", label: "History & War", intro: "Events narrated as recent history: oaths, campaigns and conquest." },
   { id: "animals", label: "Animals & Beasts", intro: "Real and imagined creatures, from horses to the unicorn." },
   { id: "portraiture", label: "Portraiture", intro: "Images of specific living people." },
+  { id: "judgement-and-hell", label: "Judgement & Hell", intro: "Last Judgements, hellscapes and the fate of souls — Bosch's great subject." },
+  { id: "folly-and-moralising", label: "Folly & Moralising", intro: "Fools, proverbs, vices and satire: painting as a mirror held up to human weakness." },
+  { id: "peasant-life", label: "Peasant Life", intro: "Weddings, dances, harvests and games — Bruegel's village world." },
+  { id: "landscape", label: "Landscape", intro: "Wide views of fields, mountains and winter, where the story often becomes small." },
 ];
 
 export const vocab = { centuries, regions, styles, mediums, palettes, themes };
