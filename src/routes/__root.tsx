@@ -55,7 +55,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Medieval Atlas" },
-      { name: "description", content: "Curated collections of medieval art from Europe and Byzantium, c. 1000–1500." },
+      { name: "description", content: "Curated collections of medieval art from Europe and Byzantium, c. 1000–1570." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -118,7 +118,7 @@ function Footer() {
       <div className="mx-auto grid max-w-7xl gap-8 px-5 py-14 md:grid-cols-3 md:px-8">
         <div>
           <p className="font-display text-3xl text-accent">Medieval Atlas</p>
-          <p className="mt-3 text-sm opacity-70">Selected art from Europe and Byzantium, approximately 1000–1500. {published.length} works published.</p>
+          <p className="mt-3 text-sm opacity-70">Selected art from Europe and Byzantium, approximately 1000–1570. {published.length} works published.</p>
         </div>
         <p className="text-sm opacity-70">An editorial selection — not a survey of every medieval tradition. Period labels and date boundaries are conventions, not universal facts.</p>
         <div className="flex flex-col gap-2 text-sm">

@@ -15,7 +15,7 @@ export const Route = createFileRoute("/about")({
 });
 
 const sections: [string, string][] = [
-  ["Editorial scope", "Selected art from Europe and Byzantium, approximately 1000–1500. This is a small, growing selection — it does not represent every medieval tradition, and 'medieval' is a European periodisation that does not apply everywhere. The Lady and the Unicorn (c. 1500) sits at the edge of the range."],
+  ["Editorial scope", "Selected art from Europe and Byzantium, approximately 1000–1570. This is a small, growing selection — it does not represent every medieval tradition, and 'medieval' is a European periodisation that does not apply everywhere. The Lady and the Unicorn (c. 1500) sits at the edge of the range."],
   ["Source selection", "Images come from Wikimedia Commons files whose licence was checked on the file page (public domain or CC BY). Facts are summarised in original wording from the linked sources. Records marked 'partially verified' have not yet been checked against the holding institution's own catalogue."],
   ["Attribution conventions", "Named artists are given as catalogued. Workshops and collaborations are recorded as such. Each unknown maker is a separate record — 'unknown' never implies a single anonymous artist. Qualifications such as 'probably' are kept."],
   ["Dates", "Each work records a display label and a numeric range. 'c.' means approximately. Year-range searches include any work whose range overlaps yours, so a result may — but need not — fall within it. Works without numeric dates are excluded from year queries and say so."],

@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Medieval Atlas — Curated collections of medieval art" },
-      { name: "description", content: "Explore medieval art from Europe and Byzantium (c. 1000–1500) through time, region, makers, colour and theme." },
+      { name: "description", content: "Explore medieval art from Europe and Byzantium (c. 1000–1570) through time, region, makers, colour and theme." },
       { property: "og:title", content: "Medieval Atlas — Curated collections of medieval art" },
       { property: "og:description", content: "Five ways to encounter one collection of medieval art: time, region, makers, colour and theme." },
     ],
@@ -23,7 +23,7 @@ function Home() {
     <>
       <section className="grid items-center gap-10 py-12 md:grid-cols-[1.1fr_1fr] md:py-20">
         <div className="fade-up">
-          <p className="eyebrow">Europe & Byzantium · c. 1000–1500</p>
+          <p className="eyebrow">Europe & Byzantium · c. 1000–1570</p>
           <h1 className="mt-4 text-5xl leading-[1.05] md:text-7xl">One collection,<br /><span className="text-gold">five ways</span> of looking.</h1>
           <p className="mt-6 max-w-lg text-lg text-muted-foreground">
             Medieval Atlas introduces medieval art through curated collections — by century, by place, by maker, by colour and by subject. Every work appears once, and connects to many others.
@@ -91,7 +91,7 @@ function Home() {
         </div>
         <aside className="border border-border bg-card p-8">
           <p className="eyebrow">Catalogue scope</p>
-          <p className="mt-3 font-serif text-2xl leading-snug">{published.length} works from Europe and Byzantium, approximately 1000–1500.</p>
+          <p className="mt-3 font-serif text-2xl leading-snug">{published.length} works from Europe and Byzantium, approximately 1000–1570.</p>
           <p className="mt-3 text-sm text-muted-foreground">
             This is a growing editorial selection, not a survey of all medieval art. Images come from public-domain or openly licensed files on Wikimedia Commons; each record lists its sources. Across {visibleCollections().length} collections, membership is derived from the catalogue — so the {collectionMembers(getCollection("unknown-makers")!).length} works by unknown makers are counted, not assumed.
           </p>
