@@ -1,8 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { artworks, collections, collectionMembers, query, published, getCollection, collectionsFor, getArtwork } from "@/lib/catalogue";
+import fixture from "./fixtures/artworks.json";
+import type { Artwork } from "@/data/artworks";
+import { setCatalogue, artworks, collections, collectionMembers, query, published, getCollection, collectionsFor, getArtwork } from "@/lib/catalogue";
 import { vocab } from "@/data/vocabularies";
 import { makers } from "@/data/makers";
 import { fromSearch, toSearch } from "@/lib/url-criteria";
+
+setCatalogue(fixture as unknown as Artwork[]);
 
 describe("catalogue integrity", () => {
   it("has no duplicate artwork ids or slugs", () => {

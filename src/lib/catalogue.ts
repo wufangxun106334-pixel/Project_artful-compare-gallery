@@ -1,4 +1,4 @@
-import { artworks, type Artwork } from "@/data/artworks";
+import type { Artwork } from "@/data/artworks";
 import { makers } from "@/data/makers";
 import { vocab, label } from "@/data/vocabularies";
 import { collections, perspectives, type Collection } from "@/data/collections";
@@ -29,8 +29,19 @@ export const dimensionMeta: Record<Dimension, { label: string; terms: { id: stri
 
 export const termLabel = (d: Dimension, id: string) => label(dimensionMeta[d].terms, id);
 
-/** Published works only: placeholders never count. */
-export const published = artworks.filter((a) => a.verificationStatus !== "placeholder");
+/**
+ * Published works, loaded from the database by the root route (see src/lib/artworks.functions.ts).
+ * The arrays are filled in place so every importer sees the same data.
+ */
+export const artworks: Artwork[] = [];
+export const published: Artwork[] = [];
+let loadedRef: unknown = null;
+export function setCatalogue(rows: Artwork[]) {
+  if (loadedRef === rows) return;
+  loadedRef = rows;
+  artworks.splice(0, artworks.length, ...rows);
+  published.splice(0, published.length, ...rows.filter((a) => a.verificationStatus !== "placeholder"));
+}
 
 /** The single query engine: AND between dimensions, OR within (unless matchAllThemes). */
 export function matches(a: Artwork, c: Partial<Criteria>): boolean {
@@ -125,4 +136,4 @@ export function describeQuery(c: Partial<Criteria>) {
 
 export const undatedCount = () => published.filter((a) => a.yearStart == null || a.yearEnd == null).length;
 
-export { artworks, collections, perspectives, makers };
+export { collections, perspectives, makers };
