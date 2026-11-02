@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Bookmark, BookmarkCheck, Columns2, ImageOff, X } from "lucide-react";
 import type { Artwork } from "@/data/artworks";
 import type { Collection } from "@/data/collections";
@@ -9,6 +9,12 @@ import { cn } from "@/lib/utils";
 
 export function ArtImage({ src, alt, width, height, className, eager }: { src: string; alt: string; width?: number | undefined; height?: number | undefined; className?: string | undefined; eager?: boolean | undefined }) {
   const [state, setState] = useState<"loading" | "ok" | "error">("loading");
+  const ref = useRef<HTMLImageElement>(null);
+  // Images may finish loading before hydration attaches onLoad/onError.
+  useEffect(() => {
+    const el = ref.current;
+    if (el?.complete) setState(el.naturalWidth > 0 ? "ok" : "error");
+  }, [src]);
   const ratio = width && height ? `${width} / ${height}` : undefined;
   if (state === "error")
     return (
@@ -19,7 +25,7 @@ export function ArtImage({ src, alt, width, height, className, eager }: { src: s
     );
   return (
     <img
-      src={src} alt={alt} width={width} height={height}
+      ref={ref} src={src} alt={alt} width={width} height={height}
       loading={eager ? "eager" : "lazy"} decoding="async"
       style={{ aspectRatio: ratio }}
       onLoad={() => setState("ok")} onError={() => setState("error")}
