@@ -85,7 +85,7 @@ function Home() {
           <h2 className="mt-2 text-4xl">Notice relationships</h2>
           <p className="mt-4 text-muted-foreground">Place two works side by side to see what they share — a century, a region, a subject, a palette. Or combine criteria, like <em>Italy AND 14th century AND Angels</em>, to find where collections intersect.</p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link to="/compare" search={{ a: "art-011", b: "art-003" }} className="bg-primary px-5 py-2.5 text-sm text-primary-foreground">Compare two Annunciation-era works</Link>
+            <Link to="/compare" search={{ a: "art-011", b: "art-003" }} className="bg-primary px-5 py-2.5 text-sm text-primary-foreground">Compare a Sienese altarpiece with the Wilton Diptych</Link>
             <Link to="/explore" search={{ regions: "italy", centuries: "c14", themes: "angels" }} className="border border-foreground px-5 py-2.5 text-sm">Try an intersection</Link>
           </div>
         </div>
