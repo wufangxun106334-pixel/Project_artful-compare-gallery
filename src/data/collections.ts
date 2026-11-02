@@ -26,10 +26,10 @@ export const perspectives: { id: Perspective; title: string; kicker: string; int
 
 const firstOf = (fallback: string, map: Record<string, string>, id: string) => map[id] ?? fallback;
 
-const centuryCovers: Record<string, string> = { c11: "art-006", c12: "art-012", c13: "art-007", c14: "art-002", c15: "art-005", c16: "art-015" };
+const centuryCovers: Record<string, string> = { c11: "art-006", c12: "art-012", c13: "art-007", c14: "art-002", c15: "art-005", c16: "art-066" };
 const regionCovers: Record<string, string> = { italy: "art-013", france: "art-004", england: "art-006", "low-countries": "art-010", byzantium: "art-007", scandinavia: "art-009" };
 const paletteCovers: Record<string, string> = { "gold-and-earth": "art-014", ultramarine: "art-003", "crimson-and-green": "art-015", "stone-and-ivory": "art-009", "jewel-glow": "art-008" };
-const themeCovers: Record<string, string> = { "virgin-and-child": "art-001", angels: "art-003", passion: "art-010", annunciation: "art-011", "christ-in-majesty": "art-007", adoration: "art-014", saints: "art-011", "courtly-life": "art-004", "civic-life": "art-013", "history-and-war": "art-006", animals: "art-015", portraiture: "art-005" };
+const themeCovers: Record<string, string> = { "virgin-and-child": "art-001", angels: "art-003", passion: "art-010", annunciation: "art-011", "christ-in-majesty": "art-007", adoration: "art-014", saints: "art-011", "courtly-life": "art-004", "civic-life": "art-013", "history-and-war": "art-006", animals: "art-015", portraiture: "art-005", "judgement-and-hell": "art-043", "folly-and-moralising": "art-036", "peasant-life": "art-076", landscape: "art-066" };
 
 export const collections: Collection[] = [
   ...centuries.map((c) => ({
@@ -50,9 +50,19 @@ export const collections: Collection[] = [
     orderedArtworkIds: ["art-001", "art-002", "art-011", "art-013", "art-014"],
   },
   {
+    id: "col-bosch", slug: "hieronymus-bosch", perspective: "makers", title: "Hieronymus Bosch",
+    introduction: "Visions of paradise, folly and hell from 's-Hertogenbosch — monsters, saints and sinners painted with uncanny precision.",
+    coverArtworkId: "art-026", membership: { type: "rule", criteria: { makers: ["hieronymus-bosch"] } },
+  },
+  {
+    id: "col-bruegel", slug: "pieter-bruegel-the-elder", perspective: "makers", title: "Pieter Bruegel the Elder",
+    introduction: "Seasons, proverbs and village life: Bruegel turned the peasant world and the wide landscape into great painting.",
+    coverArtworkId: "art-066", membership: { type: "rule", criteria: { makers: ["pieter-bruegel"] } },
+  },
+  {
     id: "col-netherlandish", slug: "masters-of-the-low-countries", perspective: "makers", title: "Masters of the Low Countries",
-    introduction: "Jan van Eyck and Rogier van der Weyden, two leading painters of oil on panel in the 15th century.",
-    coverArtworkId: "art-010", membership: { type: "rule", criteria: { makers: ["jan-van-eyck", "rogier-van-der-weyden"] } },
+    introduction: "From Campin and van Eyck to Memling and David: the painters of Flanders and Brabant who perfected oil on panel.",
+    coverArtworkId: "art-010", membership: { type: "rule", criteria: { makers: ["robert-campin", "jan-van-eyck", "rogier-van-der-weyden", "dieric-bouts", "hans-memling", "hugo-van-der-goes", "gerard-david", "joachim-patinir"] } },
   },
   {
     id: "col-workshops", slug: "workshops-and-collaborations", perspective: "makers", title: "Workshops & Collaborations",
