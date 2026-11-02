@@ -7,7 +7,7 @@ import { collectionMembers, getArtwork } from "@/lib/catalogue";
 import { useBookmarks, useCompare } from "@/lib/storage";
 import { cn } from "@/lib/utils";
 
-export function ArtImage({ src, alt, width, height, className, eager }: { src: string; alt: string; width?: number; height?: number; className?: string; eager?: boolean }) {
+export function ArtImage({ src, alt, width, height, className, eager }: { src: string; alt: string; width?: number | undefined; height?: number | undefined; className?: string | undefined; eager?: boolean | undefined }) {
   const [state, setState] = useState<"loading" | "ok" | "error">("loading");
   const ratio = width && height ? `${width} / ${height}` : undefined;
   if (state === "error")
