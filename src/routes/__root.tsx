@@ -13,7 +13,14 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { useCompare, useBookmarks } from "@/lib/storage";
-import { published } from "@/lib/catalogue";
+import { published, setCatalogue } from "@/lib/catalogue";
+import { queryOptions } from "@tanstack/react-query";
+import { listPublishedArtworks } from "@/lib/artworks.functions";
+import { supabase } from "@/integrations/supabase/client";
+import { Toaster } from "@/components/ui/sonner";
+import { BackButton } from "@/components/back-button";
+
+export const catalogueQuery = queryOptions({ queryKey: ["catalogue"], queryFn: () => listPublishedArtworks(), staleTime: 60_000 });
 
 function NotFoundComponent() {
   return (
@@ -67,6 +74,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
+  // beforeLoad runs before any child loader, so artwork/collection loaders see the catalogue.
+  beforeLoad: async ({ context }) => {
+    setCatalogue(await context.queryClient.ensureQueryData(catalogueQuery));
+  },
+  loader: ({ context }) => context.queryClient.ensureQueryData(catalogueQuery),
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -103,6 +115,7 @@ function Header() {
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-5 text-sm">
+          <Link to="/works" className="hover:text-primary" activeProps={{ className: "text-primary" }}>All works</Link>
           <Link to="/explore" className="hover:text-primary" activeProps={{ className: "text-primary" }}>Intersections</Link>
           <Link to="/compare" className="hover:text-primary">Compare{compare.list.length ? ` (${compare.list.length})` : ""}</Link>
           <Link to="/saved" className="hover:text-primary">Saved{saved.list.length ? ` (${saved.list.length})` : ""}</Link>
@@ -125,6 +138,7 @@ function Footer() {
           <Link to="/about" className="hover:text-accent">Sources & methodology</Link>
           <Link to="/explore" className="hover:text-accent">Intersection explorer</Link>
           <Link to="/saved" className="hover:text-accent">Saved artworks</Link>
+          <Link to="/admin" className="hover:text-accent">Admin</Link>
         </div>
       </div>
     </footer>
@@ -133,14 +147,25 @@ function Footer() {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  setCatalogue(Route.useLoaderData()); // hydrate the shared catalogue before children render
+  const router = useRouter();
+  useEffect(() => {
+    const { data } = supabase.auth.onAuthStateChange((event) => {
+      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+      router.invalidate();
+    });
+    return () => data.subscription.unsubscribe();
+  }, [router]);
   return (
     <QueryClientProvider client={queryClient}>
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:z-50 focus:bg-card focus:px-3 focus:py-2">Skip to content</a>
       <Header />
       <main id="main" className="mx-auto max-w-7xl px-5 md:px-8">
+        <BackButton />
         <Outlet />
       </main>
       <Footer />
+      <Toaster />
     </QueryClientProvider>
   );
 }
