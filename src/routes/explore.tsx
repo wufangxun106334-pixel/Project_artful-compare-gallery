@@ -24,7 +24,7 @@ function Explore() {
   const navigate = useNavigate({ from: "/explore" });
   const c = fromSearch(search);
   const sort = (search.sort as keyof typeof sorts) in sorts ? (search.sort as keyof typeof sorts) : "date";
-  const set = (next: Partial<Criteria>) => navigate({ search: toSearch({ ...c, ...next }, { sort: search.sort }) });
+  const set = (next: Partial<Criteria>) => navigate({ search: toSearch({ ...c, ...next }, { sort: search.sort }), resetScroll: false, replace: true });
   const toggle = (d: Dimension, id: string) => set({ [d]: c[d].includes(id) ? c[d].filter((x) => x !== id) : [...c[d], id] });
 
   const results = useMemo(() => {
@@ -41,7 +41,14 @@ function Explore() {
         Combine criteria across perspectives. Different dimensions are joined with <strong>AND</strong>; several choices within one dimension are joined with <strong>OR</strong>.
       </PageHeader>
       <div className="grid gap-10 py-10 lg:grid-cols-[19rem_1fr]">
-        <aside className="space-y-7" aria-label="Criteria">
+        <aside className="glass space-y-7 self-start rounded-xl p-5 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto" aria-label="Criteria">
+          <div className="flex items-center justify-between">
+            <p className="eyebrow">Filters</p>
+            <button type="button" onClick={() => navigate({ search: {}, resetScroll: false })} disabled={!active}
+              className="rounded-full border border-primary px-3 py-1 text-xs text-primary transition-colors hover:bg-primary hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-40">
+              Clear filters
+            </button>
+          </div>
           {DIMENSIONS.map((d) => (
             <fieldset key={d}>
               <legend className="eyebrow mb-2">{dimensionMeta[d].label}</legend>
@@ -50,7 +57,7 @@ function Explore() {
                   const on = c[d].includes(t.id);
                   return (
                     <button key={t.id} type="button" aria-pressed={on} onClick={() => toggle(d, t.id)}
-                      className={on ? "border border-primary bg-primary px-2.5 py-1 text-xs text-primary-foreground" : "border border-border px-2.5 py-1 text-xs hover:border-primary"}>
+                      className={on ? "rounded-full border border-primary bg-primary px-2.5 py-1 text-xs text-primary-foreground" : "rounded-full border border-border px-2.5 py-1 text-xs hover:border-primary"}>
                       {t.label}
                     </button>
                   );
@@ -83,7 +90,7 @@ function Explore() {
               <div className="mt-4 flex flex-wrap items-center gap-2">
                 {DIMENSIONS.flatMap((d) => c[d].map((id) => <Chip key={d + id} onRemove={() => toggle(d, id)}>{`${dimensionMeta[d].label}: ${termLabel(d, id)}`}</Chip>))}
                 {ranged && <Chip onRemove={() => set({ yearFrom: undefined, yearTo: undefined })}>{`Years ${c.yearFrom ?? "…"}–${c.yearTo ?? "…"}`}</Chip>}
-                <button onClick={() => navigate({ search: {} })} className="ml-2 text-xs text-primary underline">Clear all</button>
+                <button onClick={() => navigate({ search: {}, resetScroll: false })} className="ml-2 text-xs text-primary underline">Clear all</button>
               </div>
             )}
             {ranged && undatedCount() > 0 && <p className="mt-3 text-xs text-muted-foreground">{undatedCount()} works without recorded dates are excluded from year-range queries.</p>}
@@ -92,7 +99,7 @@ function Explore() {
           <div className="flex items-center justify-between py-6 text-sm">
             <p><strong>{results.length}</strong> of {published.length} works</p>
             <label className="flex items-center gap-2">Sort
-              <select value={sort} onChange={(e) => navigate({ search: { ...search, sort: e.target.value } })} className="border border-input bg-card px-2 py-1">
+              <select value={sort} onChange={(e) => navigate({ search: { ...search, sort: e.target.value }, resetScroll: false })} className="border border-input bg-card px-2 py-1">
                 {Object.entries(sorts).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
               </select>
             </label>

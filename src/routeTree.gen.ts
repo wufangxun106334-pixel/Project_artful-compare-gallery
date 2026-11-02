@@ -10,12 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as SavedRouteImport } from './routes/saved'
+import { Route as WorksRouteImport } from './routes/works'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ArtworkSlugRouteImport } from './routes/artwork.$slug'
 import { Route as CollectionSlugRouteImport } from './routes/collection.$slug'
+import { Route as MediaSplatRouteImport } from './routes/media.$'
 import { Route as PerspectiveIdRouteImport } from './routes/perspective.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,9 +28,18 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CompareRoute = CompareRouteImport.update({
@@ -43,6 +57,16 @@ const SavedRoute = SavedRouteImport.update({
   path: '/saved',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorksRoute = WorksRouteImport.update({
+  id: '/works',
+  path: '/works',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ArtworkSlugRoute = ArtworkSlugRouteImport.update({
   id: '/artwork/$slug',
   path: '/artwork/$slug',
@@ -51,6 +75,11 @@ const ArtworkSlugRoute = ArtworkSlugRouteImport.update({
 const CollectionSlugRoute = CollectionSlugRouteImport.update({
   id: '/collection/$slug',
   path: '/collection/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaSplatRoute = MediaSplatRouteImport.update({
+  id: '/media/$',
+  path: '/media/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PerspectiveIdRoute = PerspectiveIdRouteImport.update({
@@ -62,32 +91,45 @@ const PerspectiveIdRoute = PerspectiveIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
   '/saved': typeof SavedRoute
+  '/works': typeof WorksRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/artwork/$slug': typeof ArtworkSlugRoute
   '/collection/$slug': typeof CollectionSlugRoute
+  '/media/$': typeof MediaSplatRoute
   '/perspective/$id': typeof PerspectiveIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
   '/saved': typeof SavedRoute
+  '/works': typeof WorksRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/artwork/$slug': typeof ArtworkSlugRoute
   '/collection/$slug': typeof CollectionSlugRoute
+  '/media/$': typeof MediaSplatRoute
   '/perspective/$id': typeof PerspectiveIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/compare': typeof CompareRoute
   '/explore': typeof ExploreRoute
   '/saved': typeof SavedRoute
+  '/works': typeof WorksRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/artwork/$slug': typeof ArtworkSlugRoute
   '/collection/$slug': typeof CollectionSlugRoute
+  '/media/$': typeof MediaSplatRoute
   '/perspective/$id': typeof PerspectiveIdRoute
 }
 export interface FileRouteTypes {
@@ -95,42 +137,59 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/auth'
     | '/compare'
     | '/explore'
     | '/saved'
+    | '/works'
+    | '/admin'
     | '/artwork/$slug'
     | '/collection/$slug'
+    | '/media/$'
     | '/perspective/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/auth'
     | '/compare'
     | '/explore'
     | '/saved'
+    | '/works'
+    | '/admin'
     | '/artwork/$slug'
     | '/collection/$slug'
+    | '/media/$'
     | '/perspective/$id'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
+    | '/auth'
     | '/compare'
     | '/explore'
     | '/saved'
+    | '/works'
+    | '/_authenticated/admin'
     | '/artwork/$slug'
     | '/collection/$slug'
+    | '/media/$'
     | '/perspective/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
   CompareRoute: typeof CompareRoute
   ExploreRoute: typeof ExploreRoute
   SavedRoute: typeof SavedRoute
+  WorksRoute: typeof WorksRoute
   ArtworkSlugRoute: typeof ArtworkSlugRoute
   CollectionSlugRoute: typeof CollectionSlugRoute
+  MediaSplatRoute: typeof MediaSplatRoute
   PerspectiveIdRoute: typeof PerspectiveIdRoute
 }
 
@@ -143,11 +202,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/compare': {
@@ -171,6 +244,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SavedRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/works': {
+      id: '/works'
+      path: '/works'
+      fullPath: '/works'
+      preLoaderRoute: typeof WorksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/artwork/$slug': {
       id: '/artwork/$slug'
       path: '/artwork/$slug'
@@ -185,6 +272,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CollectionSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/media/$': {
+      id: '/media/$'
+      path: '/media/$'
+      fullPath: '/media/$'
+      preLoaderRoute: typeof MediaSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/perspective/$id': {
       id: '/perspective/$id'
       path: '/perspective/$id'
@@ -195,14 +289,29 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
   CompareRoute: CompareRoute,
   ExploreRoute: ExploreRoute,
   SavedRoute: SavedRoute,
+  WorksRoute: WorksRoute,
   ArtworkSlugRoute: ArtworkSlugRoute,
   CollectionSlugRoute: CollectionSlugRoute,
+  MediaSplatRoute: MediaSplatRoute,
   PerspectiveIdRoute: PerspectiveIdRoute,
 }
 export const routeTree = rootRouteImport

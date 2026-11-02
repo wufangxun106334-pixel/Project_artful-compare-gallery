@@ -84,7 +84,7 @@ function Palettes() {
         const cover = getArtwork(c.coverArtworkId)!;
         return (
           <Link key={c.id} to="/collection/$slug" params={{ slug: c.slug }} className="group grid border border-border bg-card sm:grid-cols-[1fr_1.1fr]">
-            <div className="aspect-[4/3] overflow-hidden bg-muted sm:aspect-auto"><ArtImage src={cover.image.thumbnail} alt="" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" /></div>
+            <div className="aspect-[4/3] overflow-hidden bg-muted sm:aspect-auto"><ArtImage src={cover.image.thumbnail} alt="" className="h-full w-full rounded-lg bg-background object-contain p-2" /></div>
             <div className="flex flex-col p-6">
               <Swatches colours={pal.swatches} label={false} />
               <h2 className="mt-5 text-3xl group-hover:text-primary">{c.title}</h2>
