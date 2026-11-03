@@ -10,4 +10,4 @@
 - [ ] Verify display, images, admin login, permissions
 - [ ] Rounded corners on all artwork images; frosted-glass effect on floating elements
 - [ ] CollectionCard: object-contain, no hover zoom, srcset/sizes from real variants (thumbnail+display); verify Italy/France/England desktop+mobile; report dimensions
-- [ ] Expand to ~1000 works: paintings, sculpture, gold/silver metalwork, stained glass, manuscripts, Persian/Islamic miniatures (direct publish, partial verification)
+- [x] Expand to ~1000 works: paintings, sculpture, gold/silver metalwork, stained glass, manuscripts, Persian/Islamic miniatures (direct publish, partial verification)
