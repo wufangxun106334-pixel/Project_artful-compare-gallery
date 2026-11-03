@@ -8,6 +8,7 @@ export const centuries: (Term & { start: number; end: number; context: string })
   { id: "c14", label: "14th century", start: 1301, end: 1400, context: "Sienese and Florentine painting flourishes; famine and plague reshape European society after 1348." },
   { id: "c15", label: "15th century", start: 1401, end: 1500, context: "Courtly luxury manuscripts, oil painting in the Low Countries, and Florentine altarpieces of extraordinary richness." },
   { id: "c16", label: "16th century", start: 1501, end: 1600, context: "Bosch's late visions and Pieter Bruegel's landscapes and peasant scenes carry Netherlandish painting beyond the Middle Ages." },
+  { id: "c17", label: "Early 17th century", start: 1601, end: 1650, context: "Safavid, Ottoman and Mughal court workshops carry the art of the painted miniature to new refinement." },
 ];
 
 export const regions: Term[] = [
@@ -16,6 +17,13 @@ export const regions: Term[] = [
   { id: "england", label: "England", intro: "Anglo-Norman embroidery and courtly painting connected closely to France." },
   { id: "low-countries", label: "Low Countries", intro: "Flanders and Brabant, home of early oil painting and great tapestry workshops." },
   { id: "byzantium", label: "Byzantium", intro: "The Eastern Roman Empire centred on Constantinople, with its traditions of mosaic and icon." },
+  { id: "germany", label: "Holy Roman Empire", intro: "German-speaking lands from the Rhine to the Danube: cathedral sculpture, goldsmiths' work and painted altarpieces." },
+  { id: "iberia", label: "Iberia", intro: "Christian and Islamic Spain and Portugal, where Gothic, Mudéjar and Andalusian traditions met." },
+  { id: "central-europe", label: "Central Europe", intro: "Bohemia, Poland and Hungary, with their royal courts and carved altarpieces." },
+  { id: "rus-balkans", label: "Rus' & Balkans", intro: "Orthodox lands beyond Constantinople: Novgorod, Moscow, Serbia and Bulgaria, centres of icon painting." },
+  { id: "persia", label: "Persia & Central Asia", intro: "Ilkhanid, Timurid and Safavid courts, where the illustrated book and the miniature reached their height." },
+  { id: "islamic-world", label: "Arab & Ottoman Lands", intro: "Egypt, Syria, Iraq, Anatolia and the Ottoman court: metalwork, manuscripts and painting." },
+  { id: "south-asia", label: "Mughal & Deccan India", intro: "Mughal and Deccani sultanate workshops, blending Persian and Indian painting." },
   { id: "scandinavia", label: "Scandinavia", intro: "Northern workshops working in walrus ivory and wood, linked to the wider Norse world." },
 ];
 
@@ -27,6 +35,9 @@ export const styles: Term[] = [
   { id: "international-gothic", label: "International Gothic" },
   { id: "early-netherlandish", label: "Early Netherlandish" },
   { id: "northern-renaissance", label: "Northern Renaissance" },
+  { id: "renaissance", label: "Italian Renaissance" },
+  { id: "islamic", label: "Islamic" },
+  { id: "persianate", label: "Persianate miniature" },
 ];
 
 export const mediums: Term[] = [
@@ -34,6 +45,8 @@ export const mediums: Term[] = [
   { id: "canvas-painting", label: "Painting on canvas" },
   { id: "fresco", label: "Fresco" },
   { id: "manuscript", label: "Illuminated manuscript" },
+  { id: "miniature", label: "Miniature painting" },
+  { id: "metalwork", label: "Gold, silver & metalwork" },
   { id: "mosaic", label: "Mosaic" },
   { id: "stained-glass", label: "Stained glass" },
   { id: "sculpture", label: "Sculpture & carving" },
@@ -64,6 +77,8 @@ export const themes: Term[] = [
   { id: "judgement-and-hell", label: "Judgement & Hell", intro: "Last Judgements, hellscapes and the fate of souls — Bosch's great subject." },
   { id: "folly-and-moralising", label: "Folly & Moralising", intro: "Fools, proverbs, vices and satire: painting as a mirror held up to human weakness." },
   { id: "peasant-life", label: "Peasant Life", intro: "Weddings, dances, harvests and games — Bruegel's village world." },
+  { id: "poetry-and-epic", label: "Poetry & Epic", intro: "Scenes from the Shahnama, the Khamsa of Nizami and other great poems." },
+  { id: "relics-and-liturgy", label: "Relics & Liturgy", intro: "Reliquaries, chalices and crosses made for the altar and the cult of saints." },
   { id: "landscape", label: "Landscape", intro: "Wide views of fields, mountains and winter, where the story often becomes small." },
 ];
 
